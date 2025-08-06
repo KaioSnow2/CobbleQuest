@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>COBBLEQUEST - Servidor Cobblemon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: url('https://cdna.artstation.com/p/assets/images/images/064/002/118/large/chadrixy-cobblemon12.jpg?1686854539') no-repeat center center fixed;
+      background-size: cover;
+      color: #e0f0ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      text-shadow: 1px 1px 4px #003366;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      width: 100%;
+      max-width: 900px;
+      background: rgba(0, 44, 89, 0.75);
+      padding: 30px 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px #003366;
+    }
+
+    header img {
+      width: 160px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 8px #2b8cff);
+    }
+
+    header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 4rem;
+  color: #48a1ff;
+  letter-spacing: 6px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  /* text-shadow removido */
+}
+
+    }
+
+    header p {
+      font-size: 1.4rem;
+      color: #b0d8ffcc;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .info {
+      max-width: 900px;
+      background: rgba(0, 44, 89, 0.65);
+      border-radius: 15px;
+      padding: 25px 30px;
+      box-shadow: 0 0 12px #2b6efcaa;
+      margin-bottom: 40px;
+    }
+
+    .info h2 {
+      font-size: 2.4rem;
+      color: #79baff;
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px #1f62d1;
+    }
+
+    .info ul {
+      list-style: none;
+    }
+
+    .info ul li {
+      font-size: 1.2rem;
+      margin-bottom: 14px;
+      padding-left: 25px;
+      position: relative;
+      font-weight: 600;
+      color: #c3e1ff;
+    }
+
+    .info ul li::before {
+      content: '✔️';
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 1.3rem;
+      color: #48a1ff;
+      text-shadow: 0 0 3px #2b6efc;
+    }
+
+    .discord-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background-color: #5865F2;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.3rem;
+      box-shadow: 0 0 10px #3b50d4;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .discord-link:hover {
+      background-color: #4752C4;
+      box-shadow: 0 0 20px #2e3ea4;
+    }
+
+    .discord-link img {
+      width: 28px;
+      height: 28px;
+      filter: drop-shadow(0 0 3px #000);
+    }
+
+    #players-online {
+      margin-top: 35px;
+      background: rgba(0, 44, 89, 0.75);
+      padding: 18px 25px;
+      border-radius: 15px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #7ecbff;
+      text-align: center;
+      box-shadow: 0 0 15px #48a1ff;
+      width: 280px;
+      user-select: none;
+      letter-spacing: 1.2px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.8rem;
+      }
+      header img {
+        width: 120px;
+      }
+      .info h2 {
+        font-size: 1.8rem;
+      }
+      .discord-link {
+        font-size: 1.1rem;
+        padding: 12px 20px;
+      }
+      #players-online {
+        width: 100%;
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Coloque sua logo no src abaixo, se quiser -->
+    <https://imgur.com/ZX5ygfu />
+    <h1>COBBLEQUEST</h1>
+    <p>O melhor servidor Cobblemon de Minecraft no Brasil!</p>
+  </header>
+
+  <section class="info">
+    <h2>O que você encontrará no servidor:</h2>
+    <ul>
+      <li>Batalhas Pokémon emocionantes</li>
+      <li>Mundo totalmente customizado</li>
+      <li>Eventos semanais e recompensas</li>
+      <li>Comunidade ativa e amigável</li>
+      <li>Modpack exclusivo</li>
+    </ul>
+  </section>
+
+  <a href="https://discord.gg/pEa7mpF8vP" class="discord-link" target="_blank" rel="noopener noreferrer">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord" />
+    Entrar no nosso Discord
+  </a>
+
+  <div id="players-online">Carregando jogadores online...</div>
+
+  <script>
+    const serverIP = "sd-br7.blazebr.com:28547"; // Coloque o IP do seu servidor Minecraft aqui
+
+    fetch(`https://api.mcsrvstat.us/2/${serverIP}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const playersOnline = data.players ? data.players.online : 0;
+        const playersMax = data.players ? data.players.max : 'desconhecido';
+        document.getElementById('players-online').innerText = `Jogadores online: ${playersOnline} / ${playersMax}`;
+      })
+      .catch((err) => {
+        document.getElementById('players-online').innerText = "Não foi possível obter os jogadores online.";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
